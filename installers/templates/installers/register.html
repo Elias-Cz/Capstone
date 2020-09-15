@@ -1,0 +1,13 @@
+{% extends "installers/layout.html" %}
+
+{% block body %}
+  <form class="" action="" method="post">
+    {{ message }}
+    <input autofocus type="email" name="email" value="" placeholder="E-Mail">
+    <input type="text" name="username" value="" placeholder="Username">
+    <input type="password" name="password" value="" placeholder="Password">
+    <input type="password" name="confirmation" value="" placeholder="Confirm Password">
+    <input type="submit" value="Register">
+    {% csrf_token %}
+  </form>
+{% endblock %}

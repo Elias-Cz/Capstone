@@ -1,0 +1,7 @@
+{% extends "installers/layout.html" %}
+
+{% block body %}
+  <h1>Hello, {{ request.user }}</h1>
+  <h2>Your Projects:</h2>
+  <a href="{% url 'schedule' %}">Schedule a project here!</a>
+{% endblock %}

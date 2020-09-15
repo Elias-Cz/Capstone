@@ -1,0 +1,32 @@
+{% extends "installers/layout.html" %}
+
+{% block body %}
+  <h1>Schedule an appointment</h1>
+  <p>Please select an available day from the calendar below</p>
+  <em>Installers will arrive at your address at 10am, installation takes the whole day.</em>
+<hr>
+  <div class="calendar">
+    <div class="calendar_date">
+    <div class="calendar_day">M</div>
+    <div class="calendar_day">T</div>
+    <div class="calendar_day">W</div>
+    <div class="calendar_day">T</div>
+    <div class="calendar_day">F</div>
+    <div class="calendar_day">S</div>
+    <div class="calendar_day">S</div>
+    {% if date_offset %}
+      {% for date_offset_single in date_offset %}
+        <a href="#0">-</a>
+      {% endfor %}
+      {% for range_day in range_len %}
+        <a href="#0">{{ range_day }}</a>
+      {% endfor %}
+    {% else %}
+      {% for range_day in range_len %}
+        <a href="#0" value="{{ range_day }}">{{ range_day }}</a>
+      {% endfor %}
+    {% endif %}
+    </div>
+  </div>
+
+{% endblock %}
