@@ -55,8 +55,15 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         # Check if authentication successful
         if user is not None:
-            login(request, user)
-            return HttpResponseRedirect(reverse("profile"))
+            check_perms = get_object_or_404(User, username=username)
+            if check_perms.installer == True:
+                print('yay')
+                login(request, user)
+                return HttpResponseRedirect(reverse("installer"))
+            if check_perms.installer == False:
+                print('no')
+                login(request, user)
+                return HttpResponseRedirect(reverse("profile"))
         else:
             return render(request, "installers/index.html", {
                 "message": "Invalid username and/or password."
@@ -84,3 +91,30 @@ def schedule(request):
     "range_len": range_len,
     "date_offset": date_offset
     })
+
+def activate(request):
+    if request.method == "POST":
+        employee_id = request.POST.get('emp_id')
+        employee_id = int(employee_id)
+        print(employee_id)
+        print(type(employee_id))
+        user = request.user
+        employee_ids = list(range(1000, 1200))
+        if employee_id in employee_ids:
+            User.objects.filter(username=user).update(installer=True)
+            return HttpResponseRedirect(reverse("installer"))
+        else:
+            return render(request, "installers/activate.html", {
+            "message": "Invalid employee ID"
+            })
+    return render(request, "installers/activate.html")
+
+def installer(request):
+    username = request.user
+    check_perms = get_object_or_404(User, username=username)
+    if check_perms.installer == False:
+        return render(request, "installers/index.html", {
+        "message_2": "The page you are requesting is restricted"
+        })
+    elif check_perms.installer == True:
+        return render(request, "installers/installer_profile.html")

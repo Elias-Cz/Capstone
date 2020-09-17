@@ -1,0 +1,10 @@
+{% extends "installers/layout.html" %}
+
+{% block body %}
+  <form class="" action="" method="post">
+    {{ message }}
+    <input type="number" name="emp_id" value=""placeholder="Employee ID Number">
+    <input type="submit" name="" value="Submit">
+    {% csrf_token %}
+  </form>
+{% endblock %}
