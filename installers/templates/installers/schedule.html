@@ -5,6 +5,20 @@
   <p>Please select an available day from the calendar below</p>
   <em>Installers will arrive at your address at 10am, installation takes the whole day.</em>
 <hr>
+  <!-- Schedule Popup -->
+  <div class="schedule_confirm">
+    <div class="schedule_confirm_cont">
+      <span class="schedule_confirm_close">&times;</span>
+      <p id=confirmationText></p>
+      <form class="" action="" method="post">
+        <input type="hidden" class="dateValue"name="date_value" value="">
+        <input type="hidden" class="monthName"name="month_name" value="">
+        <input type="submit" name="" value="Submit">
+        {% csrf_token %}
+      </form>
+    </div>
+  </div>
+
   <div class="calendar">
     <div class="calendar_date">
     <div class="calendar_day">M</div>
@@ -19,11 +33,11 @@
         <a href="#0">-</a>
       {% endfor %}
       {% for range_day in range_len %}
-        <a href="#0">{{ range_day }}</a>
+        <a href="#" class="dateSelect" value="{{ range_day }}">{{ range_day }}</a>
       {% endfor %}
     {% else %}
       {% for range_day in range_len %}
-        <a href="#0" value="{{ range_day }}">{{ range_day }}</a>
+        <a href="#" class="dateSelect" value="{{ range_day }}">{{ range_day }}</a>
       {% endfor %}
     {% endif %}
     </div>

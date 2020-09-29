@@ -1,4 +1,5 @@
 import datetime
+import random
 
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
@@ -7,7 +8,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from calendar import monthrange
 
-from .models import User
+from .models import User, Schedule, Day
 
 days = [
     "Monday",
@@ -87,9 +88,41 @@ def schedule(request):
     print(date_offset)
     print(days[begining_day])
     print(range_len)
+    if request.method == "POST":
+        date = request.POST.get('date_value')
+        month = request.POST.get('month_name')
+        user = get_object_or_404(User, username=request.user)
+        date_month = month + '' + date
+        print(date_month)
+        installer_check = User.objects.filter(installer=True)
+        installer = random.choice(installer_check)
+        print(installer_check)
+        d = Day(day_data=date_month, customer=user, installer=installer)
+        d.save()
+        date_new = get_object_or_404(Day, day_data=date_month)
+        s = Schedule(date_data=date_new, user_appointment=user)
+        s.save()
+        print('saved appt')
+        return render(request, "installers/confirm.html", {
+        "month": month,
+        "date": date,
+        })
     return render(request, "installers/schedule.html", {
     "range_len": range_len,
     "date_offset": date_offset
+    })
+
+def confirm(request):
+    pass
+def appointments(request):
+    day = get_object_or_404(Day, customer=request.user)
+    dates = day.day_data
+    installer = day.installer
+
+
+    return render(request, "installers/appointments.html", {
+    "dates": dates,
+    "installer": installer
     })
 
 def activate(request):

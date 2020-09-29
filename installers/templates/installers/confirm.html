@@ -1,0 +1,15 @@
+{% extends "installers/layout.html" %}
+
+{% block body %}
+  Your appointment on {{ month }} {{ date }} is confirmed!
+  <br>
+  You will be redirected shortly.
+  <em>(If you are not redirected, click <a href="#">here</a>)</em>
+  <script type="text/javascript">
+    function redir() {
+      setTimeout(function(){window.location.href = '/appointments';}, 5000);
+    }
+
+    redir()
+  </script>
+{% endblock %}
