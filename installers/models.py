@@ -12,6 +12,7 @@ class Day(models.Model):
     customer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="customer_day")
     def __str__(self):
         return f"{self.customer} has an appointment on {self.day_data}, with installer {self.installer} at 10am"
+
 class Schedule(models.Model):
     date_data = models.ForeignKey(Day, on_delete=models.CASCADE, related_name="date_data")
     user_appointment = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_appointment")

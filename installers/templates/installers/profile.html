@@ -2,6 +2,12 @@
 
 {% block body %}
   <h1>Hello, {{ request.user }}</h1>
-  <h2>Your Projects:</h2>
+  <h2>Scheduled Projects:</h2>
+  {% if appointment_check == True %}
+    <a href="{% url 'appointments' %}">{{ projects }}</a>
+  {% elif appointment_check == False%}
+    {{ projects }}
+  {% endif %}
+  <br>
   <a href="{% url 'schedule' %}">Schedule a project here!</a>
 {% endblock %}

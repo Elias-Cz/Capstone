@@ -77,7 +77,19 @@ def logout_view(request):
     return HttpResponseRedirect(reverse("index"))
 
 def profile(request):
-    return render(request, "installers/profile.html")
+    user = request.user
+    appointment_check = Day.objects.filter(customer=user)
+    if not appointment_check:
+        projects = "No projects scheduled"
+        appointment_check = False
+    else:
+        a = get_object_or_404(Day, customer=user)
+        projects = a.day_data
+        appointment_check = True
+    return render(request, "installers/profile.html", {
+    "projects": projects,
+    "appointment_check": appointment_check
+    })
 
 def schedule(request):
     day_range = monthrange(2020, 9)
