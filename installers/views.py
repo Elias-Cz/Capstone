@@ -92,7 +92,10 @@ def profile(request):
     })
 
 def schedule(request):
-    day_range = monthrange(2020, 9)
+    dt = datetime.datetime.today()
+    month_ref = dt.month
+    year_ref = dt.year
+    day_range = monthrange(year_ref, month_ref)
     day_range_add = day_range[1] + 1
     range_len = list(range(1, day_range_add))
     begining_day = day_range[0]
@@ -102,9 +105,9 @@ def schedule(request):
     print(range_len)
     if request.method == "POST":
         date = request.POST.get('date_value')
-        month = request.POST.get('month_name')
+        month_num = request.POST.get('month_name')
         user = get_object_or_404(User, username=request.user)
-        date_month = month + '' + date
+        date_month = month_num + '' + date
         print(date_month)
         installer_check = User.objects.filter(installer=True)
         installer = random.choice(installer_check)
@@ -116,7 +119,7 @@ def schedule(request):
         s.save()
         print('saved appt')
         return render(request, "installers/confirm.html", {
-        "month": month,
+        "month": month_num,
         "date": date,
         })
     return render(request, "installers/schedule.html", {
@@ -137,22 +140,7 @@ def appointments(request):
     "installer": installer
     })
 
-def activate(request):
-    if request.method == "POST":
-        employee_id = request.POST.get('emp_id')
-        employee_id = int(employee_id)
-        print(employee_id)
-        print(type(employee_id))
-        user = request.user
-        employee_ids = list(range(1000, 1200))
-        if employee_id in employee_ids:
-            User.objects.filter(username=user).update(installer=True)
-            return HttpResponseRedirect(reverse("installer"))
-        else:
-            return render(request, "installers/activate.html", {
-            "message": "Invalid employee ID"
-            })
-    return render(request, "installers/activate.html")
+
 
 def installer(request):
     username = request.user

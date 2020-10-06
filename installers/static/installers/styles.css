@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 .calendar {
   position: relative;
   width: 300px;
@@ -6,6 +10,9 @@
   box-shadow: 0 5px 50px rgba(#000, 0.5);
   border-radius: 8px;
   overflow: hidden;
+  -webkit-box-shadow: 13px 10px 19px 1px rgba(0,0,0,0.52);
+  -moz-box-shadow: 13px 10px 19px 1px rgba(0,0,0,0.52);
+  box-shadow: 13px 10px 19px 1px rgba(0,0,0,0.52);
 }
 
 .calendar_picture {
@@ -42,6 +49,7 @@
   grid-template-columns: repeat(auto-fit, minmax(25px, 1fr));
   grid-gap: 10px;
   box-sizing: border-box;
+
 }
 
 .calendar_day {
@@ -66,6 +74,25 @@
   color: #fff !important;
   font-weight: 700;
   cursor: pointer;
+}
+
+.dateSelect {
+  border: 2px solid black;
+  border-radius: 5px;
+  transition: 0.5s;
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+.dateSelect a {
+
+}
+
+.dateSelect:hover {
+  background-color: lightgrey;
+  text-decoration: none;
+  color: white;
 }
 
 .schedule_confirm {
@@ -102,4 +129,48 @@
   color: 000;
   text-decoration: none;
   cursor: pointer;
+}
+
+.column {
+  float: left;
+}
+
+.left {
+  width: 70%;
+  text-align: center;
+  margin-top: 20%;
+
+}
+
+.left form, .form2 {
+  width: 50%;
+  margin-left: 25%;
+  border-radius: 30px;
+  -webkit-box-shadow: 13px 10px 19px 1px rgba(0,0,0,0.52);
+  -moz-box-shadow: 13px 10px 19px 1px rgba(0,0,0,0.52);
+  box-shadow: 13px 10px 19px 1px rgba(0,0,0,0.52);
+  padding: 20px;
+}
+.left form input {
+  margin: 10px;
+}
+.right {
+  width: 30%;
+}
+
+.right img {
+  height: auto;
+  width: 100%;
+}
+
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+  }
+
+  .left form {
+    margin-left:0;
+    width: 100%;
+    margin-bottom: 40px;
+  }
 }

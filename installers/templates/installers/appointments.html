@@ -1,7 +1,14 @@
 {% extends "installers/layout.html" %}
 
 {% block body %}
-  You have an appointment on {{ dates }}
-  <br>
-  Your installer is {{ installer }}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <h3>You have an appointment on {{ dates }}</h3>
+      <h5>Your installer is {{ installer }}</h5>
+      <em><a href="#">Cancel Appointment</a></em>
+    </div>
+  </div>
+</div>
+
 {% endblock %}

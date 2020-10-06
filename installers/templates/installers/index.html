@@ -1,15 +1,35 @@
 {% extends "installers/layout.html" %}
 
 {% block body %}
-  <h1>INSTALLERS</h1>
-  <h6>{{ message_2 }}</h6>
-  
-  <form class="" action="{% url 'login' %}" method="post">
-    {{ message }}
-    {% csrf_token %}
-    <input type="text" name="username" value="">
-    <input type="password" name="password" value="">
-    <button type="submit" name="button">Log In</button>
-    <a href="{% url 'register' %}">Request Account</a>
-  </form>
+
+
+  <div class="cont">
+    <div class="column left">
+      <h1>INSTALLERS</h1>
+      <h6>{{ message_2 }}</h6>
+      {% if user.is_authenticated %}
+      <div class=form2>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </div>
+      {% else %}
+      <form class="" action="{% url 'login' %}" method="post">
+        <h3>Customer Login</h3>
+        {{ message }}
+        {% csrf_token %}
+        <input type="text" name="username" value="">
+        <br>
+        <input type="password" name="password" value="">
+        <br>
+        <button type="submit" name="button">Log In</button>
+        <br>
+        <a href="{% url 'register' %}">Request Account</a>
+      </form>
+      {% endif %}
+    </div>
+    <div class="column right">
+      <img src="static/installers/pic1.jpg" alt="">
+    </div>
+
+  </div>
+
 {% endblock %}
