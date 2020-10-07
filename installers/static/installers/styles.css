@@ -13,6 +13,7 @@
   -webkit-box-shadow: 13px 10px 19px 1px rgba(0,0,0,0.52);
   -moz-box-shadow: 13px 10px 19px 1px rgba(0,0,0,0.52);
   box-shadow: 13px 10px 19px 1px rgba(0,0,0,0.52);
+
 }
 
 .calendar_picture {
@@ -145,6 +146,7 @@
 .left form, .form2 {
   width: 50%;
   margin-left: 25%;
+  background-color: white;
   border-radius: 30px;
   -webkit-box-shadow: 13px 10px 19px 1px rgba(0,0,0,0.52);
   -moz-box-shadow: 13px 10px 19px 1px rgba(0,0,0,0.52);
@@ -156,6 +158,7 @@
 }
 .right {
   width: 30%;
+
 }
 
 .right img {
@@ -166,11 +169,24 @@
 @media screen and (max-width: 600px) {
   .column {
     width: 100%;
+    float: none;
+    background: url(pic1.jpg) no-repeat center center fixed;
+    background-size: cover;
+   -webkit-background-size: cover;
+   -moz-background-size: cover;
+   -o-background-size: cover;
   }
 
-  .left form {
-    margin-left:0;
-    width: 100%;
-    margin-bottom: 40px;
+  .left input {
+    width: 90%;
+  }
+
+  .left {
+    margin-top: 0;
+    min-height: 100vh;
+  }
+
+  .right {
+    display: none;
   }
 }
