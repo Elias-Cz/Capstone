@@ -60,7 +60,7 @@ def login_view(request):
             if check_perms.installer == True:
                 print('yay')
                 login(request, user)
-                return HttpResponseRedirect(reverse("installer"))
+                return HttpResponseRedirect(reverse("profile"))
             if check_perms.installer == False:
                 print('no')
                 login(request, user)
@@ -78,18 +78,28 @@ def logout_view(request):
 
 def profile(request):
     user = request.user
-    appointment_check = Day.objects.filter(customer=user)
-    if not appointment_check:
-        projects = "No projects scheduled"
-        appointment_check = False
-    else:
-        a = get_object_or_404(Day, customer=user)
-        projects = a.day_data
-        appointment_check = True
-    return render(request, "installers/profile.html", {
-    "projects": projects,
-    "appointment_check": appointment_check
-    })
+    if user.installer == True:
+        a = get_object_or_404(Day, installer=user)
+        c = a.customer
+        d = a.day_data
+        return render(request, "installers/profile.html", {
+        "c": c,
+        "d": d
+        })
+    elif user.installer == False:
+        appointment_check = Day.objects.filter(customer=user)
+        # Check for past appointments, list past projects
+        if not appointment_check:
+            projects = "No projects scheduled"
+            appointment_check = False
+        else:
+            a = get_object_or_404(Day, customer=user)
+            projects = a.day_data
+            appointment_check = True
+        return render(request, "installers/profile.html", {
+        "projects": projects,
+        "appointment_check": appointment_check
+        })
 
 def schedule(request):
     dt = datetime.datetime.today()
@@ -129,6 +139,7 @@ def schedule(request):
 
 def confirm(request):
     pass
+
 def appointments(request):
     day = get_object_or_404(Day, customer=request.user)
     dates = day.day_data
@@ -150,4 +161,4 @@ def installer(request):
         "message_2": "The page you are requesting is restricted"
         })
     elif check_perms.installer == True:
-        return render(request, "installers/installer_profile.html")
+        return render(request, "installers/profile.html")

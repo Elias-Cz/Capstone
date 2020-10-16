@@ -1,26 +1,30 @@
 {% extends "installers/layout.html" %}
+  {% block body %}
 
-{% block body %}
 
-  <div class="cont">
-    <div class="column left">
-      <div class="form2">
-        <h1>Hello, {{ request.user }}</h1>
-        <h2>Scheduled Projects:</h2>
-        {% if appointment_check == True %}
-          <a href="{% url 'appointments' %}">{{ projects }}</a>
-        {% elif appointment_check == False%}
-          {{ projects }}
-        {% endif %}
-        <br>
-        <a href="{% url 'schedule' %}">Schedule a project here!</a>
+  {% if user.installer == True %}
+  <h1>Your work Schedule:</h1>
+  You have an installation on {{ d }} with user {{ c }}
+  <br>
+  <a href="#">Installation Completed?</a>
+  {% else %}
+    <div class="cont">
+      <div class="column left">
+        <div class="form2">
+          <h1>Hello, {{ request.user }}</h1>
+          <h2>Scheduled Projects:</h2>
+          {% if appointment_check == True %}
+            <a href="{% url 'appointments' %}">{{ projects }}</a>
+          {% elif appointment_check == False %}
+            {{ projects }}
+          {% endif %}
+          <br>
+          <a href="{% url 'schedule' %}">Schedule a project here!</a>
+        </div>
       </div>
-
+      <div class="column right">
+        <img src="static/installers/pic2.jpg" alt="">
+      </div>
     </div>
-    <div class="column right">
-      <img src="static/installers/pic2.jpg" alt="">
-    </div>
-
-  </div>
-
+  {% endif %}
 {% endblock %}
