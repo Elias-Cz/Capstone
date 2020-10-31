@@ -96,13 +96,20 @@ def logout_view(request):
 def profile(request):
     user = request.user
     if user.installer == True:
-        a = get_object_or_404(Day, installer=user)
-        c = a.customer
-        d = a.day_data
-        return render(request, "installers/profile.html", {
-        "c": c,
-        "d": d
-        })
+            dc = Day.objects.filter(installer=user)
+            print(dc)
+            if dc:
+                a = get_object_or_404(Day, installer=user)
+                c = a.customer
+                d = a.day_data
+                return render(request, "installers/profile.html", {
+                "c": c,
+                "d": d
+                })
+            else:
+                return render(request, "installers/profile.html")
+
+
     elif user.installer == False:
         appointment_check = Day.objects.filter(customer=user)
         # Check if appt date has passed
