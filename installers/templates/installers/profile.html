@@ -3,10 +3,33 @@
 
 
   {% if user.installer == True %}
-  <h1>Your work Schedule:</h1>
-  You have an installation on {{ d }} with user {{ c }}
-  <br>
-  <a href="#">Installation Completed?</a>
+  <div class="cent_2">
+
+
+    {% if dc %}
+    <h1>Your work Schedule:</h1>
+    {% for appt in dc %}
+      You have an installation on {{ appt.day_data }} with user {{ appt.customer }}
+      <br>
+      <a href="#"id="installationComplete">Installation Completed?</a>
+      <hr style="max-width: 300px;">
+      <div class="schedule_confirm">
+        <div class="schedule_confirm_cont">
+          <span class="schedule_confirm_close">&times;</span>
+          <p id=confirmationText></p>
+          <form class="" action="" method="post">
+            <input type="submit" name="" value="Submit">
+            <input type="hidden" name="customer" value="{{ appt.customer }}">
+            {% csrf_token %}
+          </form>
+        </div>
+      </div>
+    {% endfor %}
+    {% else %}
+    No upcoming appointments
+    {% endif %}
+    </div>
+
   {% else %}
     <div class="cont">
       <div class="column left">
