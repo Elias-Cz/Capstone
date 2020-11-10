@@ -188,6 +188,11 @@
    -o-background-size: cover;
   }
 
+  .form2 {
+    width: 90%;
+    margin: auto;
+  }
+
   .left input {
     width: 90%;
   }

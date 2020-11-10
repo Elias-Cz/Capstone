@@ -41,7 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.target == schedulePopup) {
           schedulePopup.style.display = "none";
           alert('You have not marked this installation as completed!')
-        }
-      }
-    }
+        };
+      };
+    };
+
+
 });

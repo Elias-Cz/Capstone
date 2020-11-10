@@ -193,11 +193,24 @@ def confirm(request):
     pass
 
 def appointments(request):
-    day = get_object_or_404(Day, customer=request.user)
-    dates = day.day_data
-    installer = day.installer
+    user = request.user
+    day = Day.objects.filter(customer=user)
+    print(day)
+    if not day:
 
-
+        msg = "You have no active appointments!"
+        return render(request, "installers/profile.html", {
+        "msg": msg
+        })
+    else:
+        day = get_object_or_404(Day, customer=request.user)
+        dates = day.day_data
+        installer = day.installer
+        if request.method == "POST":
+            customer = request.user
+            customer = get_object_or_404(User, username=customer)
+            Day.objects.filter(customer=customer).delete()
+            return render(request, "installers/confirm_complete.html")
 
     return render(request, "installers/appointments.html", {
     "dates": dates,

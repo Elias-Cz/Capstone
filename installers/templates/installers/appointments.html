@@ -3,10 +3,39 @@
 {% block body %}
 <div class="container">
   <div class="row">
+    <div class="schedule_confirm">
+      <div class="schedule_confirm_cont">
+        <span class="schedule_confirm_close">&times;</span>
+        <p id=confirmationText></p>
+        <form class="" action="" method="post">
+          <input type="submit" name="" value="Submit">
+          {% csrf_token %}
+        </form>
+      </div>
+    </div>
     <div class="col-md-12 text-center">
       <h3>You have an appointment on {{ dates }}</h3>
       <h5>Your installer is {{ installer }}</h5>
-      <em><a href="#">Cancel Appointment</a></em>
+      <em><a href="#"id="customerCancelation">Cancel Appointment</a></em>
+      <script type="text/javascript">
+        document.querySelector('#customerCancelation').onclick = () => {
+          var schedulePopup = document.querySelector('.schedule_confirm');
+          var span = document.querySelector('.schedule_confirm_close');
+          schedulePopup.style.display = 'block';
+          var text = document.querySelector('#confirmationText');
+          text.textContent = "By clicking below you are confirming cancellation of your appointment (This action cannot be undone)."
+          span.onclick = () => {
+            schedulePopup.style.display = 'none';
+            alert('You have not successfully canceled your appointment!')
+          };
+          window.onclick = function(event) {
+            if (event.target == schedulePopup) {
+              schedulePopup.style.display = "none";
+              alert('You have not successfully canceled your appointment!')
+            }
+          }
+        }
+      </script>
     </div>
   </div>
 </div>
