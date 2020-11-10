@@ -20,6 +20,21 @@ days = [
     "Sunday"
     ]
 
+months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+    ];
+
 def index(request):
     return render(request, "installers/index.html")
 
@@ -54,6 +69,8 @@ def login_view(request):
         username = request.POST["username"]
         password = request.POST["password"]
         user = authenticate(request, username=username, password=password)
+
+
         # Check if authentication successful
         if user is not None:
             check_perms = get_object_or_404(User, username=username)
@@ -79,13 +96,22 @@ def logout_view(request):
 def profile(request):
     user = request.user
     if user.installer == True:
-        a = get_object_or_404(Day, installer=user)
-        c = a.customer
-        d = a.day_data
-        return render(request, "installers/profile.html", {
-        "c": c,
-        "d": d
-        })
+        if request.method == "POST":
+            customer = request.POST.get('customer')
+            customer = get_object_or_404(User, username=customer)
+            Day.objects.filter(installer=user, customer=customer).delete()
+
+            return render(request, "installers/confirm_complete.html")
+        dc = Day.objects.filter(installer=user)
+        print(dc)
+        if dc:
+            return render(request, "installers/profile.html", {
+            "dc": dc
+            })
+        else:
+            return render(request, "installers/profile.html")
+
+
     elif user.installer == False:
         appointment_check = Day.objects.filter(customer=user)
         # Check for past appointments, list past projects
@@ -96,6 +122,30 @@ def profile(request):
             a = get_object_or_404(Day, customer=user)
             projects = a.day_data
             appointment_check = True
+            # Check if appt date has passed
+            dt = datetime.datetime.today()
+            current_month = dt.month
+            current_month = months[current_month -1]
+            current_day = dt.day
+            current_day = str(current_day)
+            check_date = current_month + current_day
+            appt = get_object_or_404(Day, customer=request.user)
+            month_check = appt.day_data
+            str1 = month_check
+            str2 = check_date
+            past = [int(s) for s in str1.split() if s.isdigit()]
+            today = [int(s) for s in str2.split() if s.isdigit()]
+            print(past, today)
+            for month in months:
+                if month in month_check:
+                    past_month = month
+            for month in months:
+                if month in check_date:
+                    current_month = month
+            if months.index(past_month) < months.index(current_month):
+                print("okay now what")
+            elif current_day > month_check:
+                print('so this part works')
         return render(request, "installers/profile.html", {
         "projects": projects,
         "appointment_check": appointment_check
@@ -104,6 +154,7 @@ def profile(request):
 def schedule(request):
     dt = datetime.datetime.today()
     month_ref = dt.month
+    month = months[month_ref - 1]
     year_ref = dt.year
     day_range = monthrange(year_ref, month_ref)
     day_range_add = day_range[1] + 1
@@ -134,7 +185,8 @@ def schedule(request):
         })
     return render(request, "installers/schedule.html", {
     "range_len": range_len,
-    "date_offset": date_offset
+    "date_offset": date_offset,
+    "month": month
     })
 
 def confirm(request):
@@ -144,6 +196,7 @@ def appointments(request):
     day = get_object_or_404(Day, customer=request.user)
     dates = day.day_data
     installer = day.installer
+
 
 
     return render(request, "installers/appointments.html", {

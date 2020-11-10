@@ -27,4 +27,21 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+    document.querySelector('#installationComplete').onclick = () => {
+      var schedulePopup = document.querySelector('.schedule_confirm');
+      var span = document.querySelector('.schedule_confirm_close');
+      schedulePopup.style.display = 'block';
+      var text = document.querySelector('#confirmationText');
+      text.textContent = "Click below to mark this installation as completed."
+      span.onclick = () => {
+        schedulePopup.style.display = 'none';
+        alert('You have not marked this installation as completed!')
+      };
+      window.onclick = function(event) {
+        if (event.target == schedulePopup) {
+          schedulePopup.style.display = "none";
+          alert('You have not marked this installation as completed!')
+        }
+      }
+    }
 });
