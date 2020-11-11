@@ -30,7 +30,10 @@
     <br>
 
     <div class="calendar">
-      <h3>{{ month }}</h3>
+      <h3 id="monthVal">{{ month }}</h3><a href="#" id="nextMonth">Next</a>
+      <script type="text/javascript">
+
+      </script>
       <div class="calendar_date">
       <div class="calendar_day">M</div>
       <div class="calendar_day">T</div>
@@ -41,7 +44,7 @@
       <div class="calendar_day">S</div>
       {% if date_offset %}
         {% for date_offset_single in date_offset %}
-          <a href="#0">-</a>
+          <a href="#0" class="dateOffset">-</a>
         {% endfor %}
         {% for range_day in range_len %}
           <a href="#" class="dateSelect" value="{{ range_day }}">{{ range_day }}</a>

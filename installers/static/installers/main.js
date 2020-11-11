@@ -27,6 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+    document.querySelector('#nextMonth').onclick = () => {
+      fetch("next_month")
+      .then(console.log('wtf'))
+    }
     document.querySelector('#installationComplete').onclick = () => {
       var schedulePopup = document.querySelector('.schedule_confirm');
       var span = document.querySelector('.schedule_confirm_close');
@@ -44,6 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
         };
       };
     };
+
+
 
 
 });

@@ -11,5 +11,6 @@ urlpatterns = [
     path('schedule', views.schedule, name='schedule'),
     path('installer', views.installer, name="installer"),
     path('appointments', views.appointments, name='appointments'),
-    path('confirm', views.confirm, name="confirm")
+    path('confirm', views.confirm, name="confirm"),
+    path('next_month', views.next_month, name="next_month")
 ]
