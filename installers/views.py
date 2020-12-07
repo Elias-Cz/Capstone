@@ -22,7 +22,7 @@ days = [
     ]
 
 months = [
-    "January",
+    "January", #0
     "February",
     "March",
     "April",
@@ -33,7 +33,7 @@ months = [
     "September",
     "October",
     "November",
-    "December"
+    "December" #11
     ];
 
 def index(request):
@@ -153,9 +153,9 @@ def profile(request):
         })
 
 def schedule(request):
-    dt = datetime.datetime.today()
+    dt = datetime.datetime.today() #12/4/2020 dt.month
     month_ref = dt.month
-    month = months[month_ref - 1]
+    month = months[month_ref - 1] #"december"
     year_ref = dt.year
     day_range = monthrange(year_ref, month_ref)
     day_range_add = day_range[1] + 1
