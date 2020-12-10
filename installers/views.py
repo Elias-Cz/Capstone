@@ -229,25 +229,3 @@ def installer(request):
         })
     elif check_perms.installer == True:
         return render(request, "installers/profile.html")
-
-def next_month(request):
-    dt = datetime.datetime.today()
-    month_ref = dt.month
-    month = months[month_ref]
-    year_ref = dt.year
-    day_range = monthrange(year_ref, month_ref + 1)
-    day_range_add = day_range[1] + 1
-    range_len = list(range(1, day_range_add))
-    begining_day = day_range[0]
-    date_offset = list(range(0, day_range[0]))
-    print(date_offset)
-    print(days[begining_day])
-    print(range_len)
-    template = loader.get_template('installers/schedule.html')
-    context = {
-    "date_offset": date_offset,
-    "range_len": range_len,
-    "month": month
-    }
-    rendered_content = template.render(context)
-    return HttpResponse(rendered_content)
